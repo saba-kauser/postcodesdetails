@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {Link, BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
+  const [postcodeValue, setpostcodeValue] = useState('');
+
+  console.log(postcodeValue)
   return (
+    <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='container'>
+        <div className='form'>
+          <h3>Enter Postcode</h3>
+          <form className="input-group mb-3"> 
+            <input className="" type='text' placeholder='CB4 0GF' value={postcodeValue} onChange={(e) => setpostcodeValue(e.target.value)} required="required"/>
+             <div>
+                <Link to={`/${postcodeValue}`} className="btn btn-outline-secondary">Submit</Link>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+    </Router>
   );
 }
 
