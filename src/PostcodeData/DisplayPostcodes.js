@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { getPostCodes,postcodeValidation } from '../postcodeAPI/postcodeAPI'
+import { getNearestPostCodes, getPostCodes,postcodeValidation } from '../postcodeAPI/postcodeAPI'
 
 function DisplayPostCodes(props) {
 
     const [postCodeResult,setPostCodeResult]=useState({});
-    // const [nearestPostCode,setNearestPostCode]=useState([]);
+    const [nearestPostCode,setNearestPostCode]=useState([]);
     const location=useLocation()
 
     useEffect(()=>{
@@ -21,6 +21,17 @@ function DisplayPostCodes(props) {
                             country: postcodes.result.country,
                             region: postcodes.result.region,
                     })
+                }
+                const nearestpostcodes = await getNearestPostCodes(postcode);
+                if(postcodes.status===200){
+                    const formattedPostcodes = nearestpostcodes.result.map((result) => {
+                        return {
+                          postcode: result.postcode,
+                          country: result.country,
+                          region: result.region,
+                        };
+                      });
+                      setNearestPostCode(formattedPostcodes);
                 }
             }   
             else{
@@ -51,8 +62,8 @@ return(
                             <th scope="col">Region</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
-                            {nearestResults.map((result, i) => {
+                        <tbody>
+                            {nearestPostCode.map((result, i) => {
                             return (
                                 <tr key={i}>
                                 <th scope="row">{result.postcode}</th>
@@ -61,7 +72,7 @@ return(
                             </tr>
                             )
                             })}
-                        </tbody> */}
+                        </tbody>
                 </table>
             </div>
       </div>
