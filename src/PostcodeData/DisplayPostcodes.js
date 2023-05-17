@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 
 import { getNearestPostCodes, getPostCodes,postcodeValidation } from '../postcodeAPI/postcodeAPI'
 
@@ -22,28 +22,35 @@ function DisplayPostCodes(props) {
                             region: postcodes.result.region,
                     })
                 }
+                else{
+                    props.errorMessage('Please enter a postcode that is valid')  
+                }
                 const nearestpostcodes = await getNearestPostCodes(postcode);
                 if(postcodes.status===200){
-                    const formattedPostcodes = nearestpostcodes.result.map((result) => {
+                    const structuredPostCodes = nearestpostcodes.result.map((result) => {
                         return {
                           postcode: result.postcode,
                           country: result.country,
                           region: result.region,
                         };
                       });
-                      setNearestPostCode(formattedPostcodes);
+                      setNearestPostCode(structuredPostCodes);
                 }
-            }   
-            else{
-                props.errorMessage('Please enter a postcode that is valid')
-            }
-    }
-    
-    if (postcode) {
-        requestPostcodeData(postcode);
-    }
-},[location,props])
-
+                else{
+                    props.errorMessage('Please enter a postcode that is valid') 
+                }
+                props.errorMessage('')
+             }  
+             else{
+                props.errorMessage('Please enter a postcode that is valid')  
+                setPostCodeResult({})
+                setNearestPostCode([])
+             }
+        }
+        if (postcode) {
+            requestPostcodeData(postcode);
+        }
+    },[location,props])
 return(
         <div>
             <div className='postcoderesults'>
