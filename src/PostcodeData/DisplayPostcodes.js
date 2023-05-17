@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation} from "react-router-dom";
+import { useLocation,useNavigate} from "react-router-dom";
 
 import { getNearestPostCodes, getPostCodes,postcodeValidation } from '../postcodeAPI/postcodeAPI'
 
@@ -8,9 +8,11 @@ function DisplayPostCodes(props) {
     const [postCodeResult,setPostCodeResult]=useState({});
     const [nearestPostCode,setNearestPostCode]=useState([]);
     const location=useLocation()
+    const navigate=useNavigate()
 
     useEffect(()=>{
         const postcode=location.pathname.substring(1)
+        console.log(postcode)
          const requestPostcodeData=async(postcode)=>{
             const postcodeIsValid=await postcodeValidation(postcode)
             if (postcodeIsValid.result === true) {
@@ -45,12 +47,18 @@ function DisplayPostCodes(props) {
                 props.errorMessage('Please enter a postcode that is valid')  
                 setPostCodeResult({})
                 setNearestPostCode([])
+                navigate('/')
              }
         }
         if (postcode) {
             requestPostcodeData(postcode);
         }
-    },[location,props])
+        else{
+            setPostCodeResult({})
+            setNearestPostCode([])
+        }
+    },[location,props,navigate])
+
 return(
         <div>
             <div className='postcoderesults'>

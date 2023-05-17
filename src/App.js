@@ -21,7 +21,7 @@ function App() {
       <div className='container-fluid'> 
       <h1 className='text-center mb-4 mt-4 bg-red bg-light'>Lookup Postcodes</h1>
         <div className='form component'>
-          <h4>Please enter a postcode</h4>
+          <h4>Please enter a postcode *</h4>
           <form className="input-group mb-3"> 
             <input className="" type='text' placeholder='CB4 0GF' value={enteredPostCode} onChange={(e)=>setEnteredPostCode(e.target.value)} required="required"/>
              <div>
