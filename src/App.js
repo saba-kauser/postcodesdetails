@@ -14,6 +14,7 @@ function App() {
     setErrorMessage('empty postcode !')
    }
   }
+  
 
   return (
     <Router>
@@ -22,12 +23,12 @@ function App() {
       <h1 className='text-center mb-4 mt-4 bg-red bg-light'>Lookup Postcodes</h1>
         <div className='form component'>
           <h4>Please enter a postcode *</h4>
-          <form className="input-group mb-3"> 
+          <form className="input-group mb-3" id="postcodeform"> 
             <input className="" type='text' placeholder='CB4 0GF' value={enteredPostCode} onChange={(e)=>setEnteredPostCode(e.target.value)} required="required"/>
              <div>
-                <Link to={`/${enteredPostCode}`} className="btn btn-outline-secondary ml-1" onClick={checkEnteredPostCode}>Submit</Link>
+                <Link to={`/${enteredPostCode}`} className="btn btn-outline-secondary ml-1" onClick={checkEnteredPostCode} data-testid="submitButton">Submit</Link>
             </div>
-            <div className="error text-danger ml-5 p-1 mt-1">{errorMessage}</div>
+            <div className="error text-danger ml-5 p-1 mt-1" data-testid="errorMessage">{errorMessage}</div>
           </form>
         </div>
          <div>

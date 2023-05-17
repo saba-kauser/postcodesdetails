@@ -12,7 +12,6 @@ function DisplayPostCodes(props) {
 
     useEffect(()=>{
         const postcode=location.pathname.substring(1)
-        console.log(postcode)
          const requestPostcodeData=async(postcode)=>{
             const postcodeIsValid=await postcodeValidation(postcode)
             if (postcodeIsValid.result === true) {
